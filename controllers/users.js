@@ -12,7 +12,8 @@ import {
     where,
     updateDoc,
     orderBy,
-    limit
+    limit,
+    getDoc
 } from "firebase/firestore";
 
 const errorMsg = 'Error, try again in a few minutes or contact a developer for more details.'
@@ -32,15 +33,14 @@ export const getUsers = async (req, res) => {
     }
 }
 
-/*export const getUserById = async (req, res) => {
+export const getUserById = async (req, res) => {
     const { id } = req.params
     try {
-        const Colection = await collection(db, collectionName)
-        const document = await doc(db, collectionName, id)
-        console.log(document)
-        res.send(document)
+        const docRef = doc(db, collectionName, id)
+        const docSnap = await getDoc(docRef);
+        res.send(docSnap.data())
     } catch (error) {
         res.status(500).send(errorMsg);
         console.error('Error fetching users:', error);
     }
-} */
+}
