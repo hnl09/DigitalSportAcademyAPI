@@ -34,7 +34,9 @@ export const getCustomers = async (req, res) => {
 }
 
 export const getCustomerById = async (req, res) => {
-    const { id } = req.params
+    const {
+        id
+    } = req.params
     try {
         const docRef = doc(db, collectionName, id)
         const docSnap = await getDoc(docRef);

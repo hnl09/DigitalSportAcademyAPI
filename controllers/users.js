@@ -8,7 +8,10 @@ export const userRegistration = async (req, res) => {
     try {
         const password = req.body.password
         const hashedPassword = await bcrypt.hash(password, 10) // salt value
-        const user = { name: req.body.name, password: hashedPassword }
+        const user = {
+            name: req.body.name,
+            password: hashedPassword
+        }
         users.push(user)
         res.status(201).send(user)
     } catch (error) {
