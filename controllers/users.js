@@ -1,7 +1,16 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-const users = []
+const users = [
+    {
+        name: 'Henrique',
+        password: 'password1'
+    },
+    {
+        name: 'Tony',
+        password: 'password2'
+    }
+]
 
 const errorMsg = 'Error, try again in a few minutes or contact a developer for more details.'
 
