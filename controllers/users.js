@@ -2,14 +2,6 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 const users = [
-    {
-        name: 'Henrique',
-        password: 'password1'
-    },
-    {
-        name: 'Tony',
-        password: 'password2'
-    }
 ]
 
 const errorMsg = 'Error, try again in a few minutes or contact a developer for more details.'
@@ -30,13 +22,13 @@ export const userRegistration = async (req, res) => {
     }
 }
 
-export const userLogin = async (req, res) => {
-    const user = users.find(user => user.name = req.body.name)
+export const userLogin = async (req, res) => { // CHANGE TO USER TO USERNAME AFTER
+    const user = users.find(user => user.name === req.body.name)
     if (user == null) {
         return res.status(400).send('User not found')
     }
     try {
-        if (await bcrypt.compare(req.body.password, user.password)) { // Here he only validates the password, create a rule to validathe the user too
+        if (await bcrypt.compare(req.body.password, user.password)) {
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
             res.json({ accessToken: accessToken })
         } else {
