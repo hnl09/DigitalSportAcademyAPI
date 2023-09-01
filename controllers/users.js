@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 const users = []
 
@@ -27,7 +28,8 @@ export const userLogin = async (req, res) => {
     }
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            res.send('Logged in')
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+            res.json({  accessToken: accessToken  })
         } else {
             res.send('Access Denied')
         }
@@ -35,8 +37,4 @@ export const userLogin = async (req, res) => {
         res.status(500).send(errorMsg);
         console.error('Error loggin in:', error);
     }
-}
-
-export const userAuthentication = async (req, res) => {
-    // Authenticate User
 }

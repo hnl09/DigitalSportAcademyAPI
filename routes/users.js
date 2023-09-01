@@ -1,6 +1,5 @@
 import express from 'express';
 import {
-    userAuthentication,
     userLogin,
     userRegistration
 } from '../controllers/users.js';
