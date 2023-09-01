@@ -38,7 +38,11 @@ export const getUserById = async (req, res) => {
     try {
         const docRef = doc(db, collectionName, id)
         const docSnap = await getDoc(docRef);
-        res.send(docSnap.data())
+        if (docSnap.exists()) {
+            res.send(docSnap.data())
+        } else {
+            res.send("Document does not exist")
+        }
     } catch (error) {
         res.status(500).send(errorMsg);
         console.error('Error fetching users:', error);
