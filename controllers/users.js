@@ -1,50 +1,39 @@
-import {
-    db
-} from "../firebase.js"
-import {
-    getFirestore,
-    collection,
-    addDoc,
-    doc,
-    setDoc,
-    getDocs,
-    query,
-    where,
-    updateDoc,
-    orderBy,
-    limit,
-    getDoc
-} from "firebase/firestore";
+import bcrypt from 'bcrypt'
+
+const users = []
 
 const errorMsg = 'Error, try again in a few minutes or contact a developer for more details.'
 
-const collectionName = 'participantes';
-
-export const getUsers = async (req, res) => {
+export const userRegistration = async (req, res) => {
     try {
-        const users = collection(db, collectionName);
-        const q = query(users);
-        const snapshot = await getDocs(q);
-        const usersData = snapshot.docs.map(doc => doc.data());
-        res.send(usersData);
+        const password = req.body.password
+        const hashedPassword = await bcrypt.hash(password, 10) // salt value
+        const user = { name: req.body.name, password: hashedPassword }
+        users.push(user)
+        res.status(201).send(user)
     } catch (error) {
         res.status(500).send(errorMsg);
-        console.error('Error fetching users:', error);
+        console.error('Error creating users:', error);
     }
 }
 
-export const getUserById = async (req, res) => {
-    const { id } = req.params
+export const userLogin = async (req, res) => {
+    const user = users.find(user => user.name = req.body.name)
+    if (user == null) {
+        return res.status(400).send('User not found')
+    }
     try {
-        const docRef = doc(db, collectionName, id)
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            res.send(docSnap.data())
+        if (await bcrypt.compare(req.body.password, user.password)) {
+            res.send('Logged in')
         } else {
-            res.send("Document does not exist")
+            res.send('Access Denied')
         }
     } catch (error) {
         res.status(500).send(errorMsg);
-        console.error('Error fetching users:', error);
+        console.error('Error loggin in:', error);
     }
+}
+
+export const userAuthentication = async (req, res) => {
+    // Authenticate User
 }
