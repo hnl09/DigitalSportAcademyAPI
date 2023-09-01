@@ -14,7 +14,7 @@ export const userRegistration = async (req, res) => {
             password: hashedPassword
         }
         users.push(user)
-        res.status(201).send(user)
+        res.status(201).send(`User ${user.name} created`)
     } catch (error) {
         res.status(500).send(errorMsg);
         console.error('Error creating users:', error);
@@ -27,9 +27,9 @@ export const userLogin = async (req, res) => {
         return res.status(400).send('User not found')
     }
     try {
-        if (await bcrypt.compare(req.body.password, user.password)) {
+        if (await bcrypt.compare(req.body.password, user.password)) { // Here he only validates the password, create a rule to validathe the user too
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-            res.json({  accessToken: accessToken  })
+            res.json({ accessToken: accessToken })
         } else {
             res.send('Access Denied')
         }
@@ -37,4 +37,20 @@ export const userLogin = async (req, res) => {
         res.status(500).send(errorMsg);
         console.error('Error loggin in:', error);
     }
+}
+
+export const authenticateToken = async (req, res, next) => {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if (token == null) return res.sendStatus(401)
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403)
+        req.user = user
+        next()
+    })
+}
+
+export const getUser = async (req, res) => {
+    res.json(users.filter(user => user.name === req.user.name))
 }

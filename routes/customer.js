@@ -5,6 +5,8 @@ import {
     getCustomers
 } from '../controllers/customer.js';
 
+import { authenticateToken } from '../controllers/users.js';
+
 const router = express.Router()
 
 router.get('/', getCustomers)
