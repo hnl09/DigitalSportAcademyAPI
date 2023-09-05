@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-const users = [
-]
+const users = []
+let tokens = []
 
 const errorMsg = 'Error, try again in a few minutes or contact a developer for more details.'
 
@@ -30,6 +30,7 @@ export const userLogin = async (req, res) => { // CHANGE TO USER TO USERNAME AFT
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+            tokens.push(accessToken)
             res.json({ accessToken: accessToken })
         } else {
             res.send('Access Denied')
@@ -54,4 +55,13 @@ export const authenticateToken = async (req, res, next) => {
 
 export const getUser = async (req, res) => {
     res.json(users.filter(user => user.name === req.user.name))
+}
+
+export const logoutUser = async (req, res) => {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if (token == null) return res.status(401).send('Authorization token is missing.')
+
+    tokens = tokens.filter(token => token !== req.body.token)
+    return res.status(204)
 }
