@@ -34,17 +34,34 @@ export const getCustomers = async (req, res) => {
 }
 
 export const getCustomerById = async (req, res) => {
-    const {
-        id
-    } = req.params
+    const { id } = req.params
     try {
         const docRef = doc(db, collectionName, id)
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-            res.send(docSnap.data())
+            let customerData = docSnap.data()
+            res.send(customerData)
         } else {
             res.send("Document does not exist")
         }
+    } catch (error) {
+        res.status(500).send(errorMsg);
+        console.error('Error fetching customer:', error);
+    }
+}
+
+export const getCustomerByEmail = async (req, res) => {
+    const { email } = req.params
+    try {
+        const customer = collection(db, 'participantes');
+        const q = query(customer, where("email", "==", email));
+        const snapshot = await getDocs(q);
+        const customerData = snapshot.docs.map(doc => doc.data())[0];
+        if (!snapshot.empty) {
+            res.send(customerData)
+        } else {
+            res.send(`User ${email} not found`)
+        } 
     } catch (error) {
         res.status(500).send(errorMsg);
         console.error('Error fetching customer:', error);
