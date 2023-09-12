@@ -9,7 +9,7 @@ import {
 
 const router = express.Router()
 
-router.post('/', userRegistration)
+router.post('/register', userRegistration)
 
 router.post('/login', userLogin)
 

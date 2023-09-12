@@ -10,10 +10,10 @@ import { authenticateToken } from '../controllers/users.js';
 
 const router = express.Router()
 
-router.get('/', getCustomers)
+router.get('/', authenticateToken, getCustomers)
 
-router.get('/id/:id', getCustomerById)
+router.get('/id/:id', authenticateToken, getCustomerById)
 
-router.get('/email/:email', getCustomerByEmail)
+router.get('/email/:email', authenticateToken, getCustomerByEmail)
 
 export default router;

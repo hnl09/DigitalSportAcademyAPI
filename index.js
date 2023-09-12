@@ -11,11 +11,11 @@ const PORT = 6500;
 
 app.use(bodyParser.json());
 
-app.use('/customers', customersRoutes)
+app.use('/api/customers', customersRoutes)
 
-app.use('/users', usersRoutes)
+app.use('/api/users', usersRoutes)
 
-app.use('/', homepageRoute);
+app.use('/api', homepageRoute);
 
 app.use(express.static("public"))
 

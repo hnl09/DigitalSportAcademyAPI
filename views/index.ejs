@@ -17,30 +17,193 @@
             <p>
                 The Digital Sport Academy API provides access to customer data.
             </p>
-            <h3>Base URL</h3>
-            <p>The base URL for this API is https://INSERT URL/api.</p>
-            <h3>Authentication</h3>
-            <p>This API uses JWT (JSON Web Tokens) for authentication. To access protected endpoints, clients must include a valid JWT token in the Authorization header of their requests. The token should be prefixed with the word "Bearer" followed by a space, like this: Authorization: Bearer YOUR_JWT_TOKEN.</p>
-            <p>Passwords in the API are securely hashed using bcrypt.</p>
         </div>
-
-
-        
+        <h3>Base URL</h3>
+        <p>The base URL for this API is https://INSERT URL/api.</p>
+        <h3>Authentication</h3>
+        <p>This API uses JWT (JSON Web Tokens) for authentication. To access protected endpoints, clients must include a
+            valid JWT token in the Authorization header of their requests. The token should be prefixed with the word
+            "Bearer" followed by a space, like this: Authorization: Bearer YOUR_JWT_TOKEN.</p>
+        <p>Passwords in the API are securely hashed using bcrypt.</p>
+        <h2 style="padding-top: 3px; padding-bottom: 8px;">Endpoints</h2>
+        <h3>Creating User</h3>
         <div class="card">
-            <div class="card-header">
-                Default Panel Header
-            </div>
+            <div class="card-header">POST /api/users/register</div>
             <div class="card-body">
-                <p>This is some panel content.</p>
+                <p>Create a new user</p>
+                <p><b>Request body:</b></p>
                 <pre>
 {
-    "key1": "value1",
-    "key2": "value2",
-    "key3": "value3"
+    "username": "john",
+    "password": "password"
 }
-                    </pre>
+</pre>
             </div>
         </div>
+        <h3>Loggin in</h3>
+        <div class="card">
+            <div class="card-header">POST /api/users/login</div>
+            <div class="card-body">
+                <p>Logs in to retrieve your JWT Token</p>
+                <p><b>Request body:</b></p>
+                <pre>
+{
+    "username": "john",
+    "password": "password"
+}
+</pre>
+                <p><b>Response body:</b></p>
+                <pre>
+{
+    "accessToken": YOUR TOKEN
+}
+</pre>
+            </div>
+        </div>
+        <h3>Select all customers</h3>
+        <div class="card">
+            <div class="card-header">GET /api/customers</div>
+            <div class="card-body">
+                <p>Retrieves all customers registered in DSA</p>
+                <p><b>Header:</b></p>
+                <ul>
+                    <li>Authorization: Bearer YOUR_JWT_TOKEN</li>
+                </ul>
+                <p><b>Response body:</b></p>
+                <pre>
+{
+    "attempt": 1,
+    "couponCode": null,
+    "displayName": "John Doe",
+    "passed": false,
+    "firstLogin": {
+        "seconds": 1692453830,
+        "nanoseconds": 659000000
+    },
+    "email": "john@doe.com",
+    "lastLogin": {
+        "seconds": 1692914644,
+        "nanoseconds": 830000000
+    },
+    "attempts": 1,
+    "correctAnswers": 1
+},
+{
+    "attempt": 3,
+    "displayName": "Ada Trevor",
+    "passed": false,
+    "attempts": 3,
+    "correctAnswers": 3,
+    "firstLogin": {
+        "seconds": 1692911411,
+        "nanoseconds": 458000000
+    },
+    "lastLogin": {
+        "seconds": 1692911548,
+        "nanoseconds": 197000000
+    },
+    "couponCode": null,
+    "email": "ada@trevor.com"
+}
+</pre>
+            </div>
+        </div>
+
+        <h3>Select customer by document Id</h3>
+        <div class="card">
+            <div class="card-header">GET /api/customers/id/:documentId</div>
+            <div class="card-body">
+                <p>Retrieves customer data by firestore document id</p>
+                <p><b>Header:</b></p>
+                <ul>
+                    <li>Authorization: Bearer YOUR_JWT_TOKEN</li>
+                </ul>
+                <p><b>Response body:</b></p>
+                <pre>
+{
+    "attempt": 1,
+    "couponCode": null,
+    "displayName": "John Doe",
+    "passed": false,
+    "firstLogin": {
+        "seconds": 1692453830,
+        "nanoseconds": 659000000
+    },
+    "email": "john@doe.com",
+    "lastLogin": {
+        "seconds": 1692914644,
+        "nanoseconds": 830000000
+    },
+    "attempts": 1,
+    "correctAnswers": 1
+}
+</pre>
+            </div>
+        </div>
+        <h3>Select customer by email</h3>
+        <div class="card">
+            <div class="card-header">GET /api/customers/email/:email</div>
+            <div class="card-body">
+                <p>Retrieves customer data by email</p>
+                <p><b>Header:</b></p>
+                <ul>
+                    <li>Authorization: Bearer YOUR_JWT_TOKEN</li>
+                </ul>
+                <p><b>Response body:</b></p>
+                <pre>
+{
+    "attempt": 1,
+    "couponCode": null,
+    "displayName": "John Doe",
+    "passed": false,
+    "firstLogin": {
+        "seconds": 1692453830,
+        "nanoseconds": 659000000
+    },
+    "email": "john@doe.com",
+    "lastLogin": {
+        "seconds": 1692914644,
+        "nanoseconds": 830000000
+    },
+    "attempts": 1,
+    "correctAnswers": 1
+}
+</pre>
+            </div>
+        </div>
+        <h2>Data Structures</h2>
+        <p>The API mostly returns customer data stored in Firestore database.</p>
+        <h3>Customer Data</h3>
+        <pre>
+{
+    "displayName": "John Doe",
+    "email": "john@doe.com",
+    "couponCode": null,
+    "attempt": 1,
+    "attempts": 1,
+    "correctAnswers": 1,
+    "passed": false,
+    "firstLogin": {
+        "seconds": 1692453830,
+        "nanoseconds": 659000000
+    },
+    "lastLogin": {
+        "seconds": 1692914644,
+        "nanoseconds": 830000000
+    }
+}
+</pre>
+        <ul>
+            <li><b>displayName:</b> Customer's full name</li>
+            <li><b>email:</b> Customer's email</li>
+            <li><b>couponCode:</b> Customer's coupon code</li>
+            <li><b>attempt:</b> Current customer quiz attempt</li>
+            <li><b>attempts:</b> How many attempts customer tried</li>
+            <li><b>correctAnswers:</b> Customer's correct answers based on current attempt</li>
+            <li><b>passed:</b> Customer's quiz state</li>
+            <li><b>firstLogin:</b> Customer's first login in seconds and nanoseconds timestamp</li>
+            <li><b>lastLogin:</b> Customer's last login in seconds and nanoseconds timestamp</li>
+        </ul>
     </div>
 </body>
 
