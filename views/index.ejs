@@ -1,13 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Sports Academy API Documentation</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Digital Sports Academy API</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    
+    <div class="container">
+        <div class='page-header'>
+            <h1>Digital Sport Academy API Documentation</h1>
+            <p>
+                The Digital Sport Academy API provides access to customer data.
+            </p>
+            <h3>Base URL</h3>
+            <p>The base URL for this API is https://INSERT URL/api.</p>
+            <h3>Authentication</h3>
+            <p>This API uses JWT (JSON Web Tokens) for authentication. To access protected endpoints, clients must include a valid JWT token in the Authorization header of their requests. The token should be prefixed with the word "Bearer" followed by a space, like this: Authorization: Bearer YOUR_JWT_TOKEN.</p>
+            <p>Passwords in the API are securely hashed using bcrypt.</p>
+        </div>
+
+
+        
+        <div class="card">
+            <div class="card-header">
+                Default Panel Header
+            </div>
+            <div class="card-body">
+                <p>This is some panel content.</p>
+                <pre>
+{
+    "key1": "value1",
+    "key2": "value2",
+    "key3": "value3"
+}
+                    </pre>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
