@@ -1,20 +1,5 @@
-import {
-    db
-} from "../firebase.js"
-import {
-    getFirestore,
-    collection,
-    addDoc,
-    doc,
-    setDoc,
-    getDocs,
-    query,
-    where,
-    updateDoc,
-    orderBy,
-    limit,
-    getDoc
-} from "firebase/firestore";
+import { db } from "../firebase.js"
+import { getFirestore, collection, addDoc, doc, setDoc, getDocs, query, where, updateDoc, orderBy, limit, getDoc } from "firebase/firestore";
 
 const errorMsg = 'Error, try again in a few minutes or contact a developer for more details.'
 

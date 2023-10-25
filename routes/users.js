@@ -1,11 +1,5 @@
 import express from 'express';
-import {
-    authenticateToken,
-    getUser,
-    logoutUser,
-    userLogin,
-    userRegistration
-} from '../controllers/users.js';
+import { authenticateToken, getUser, logoutUser, userLogin, userRegistration } from '../controllers/users.js';
 
 const router = express.Router()
 

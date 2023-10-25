@@ -1,10 +1,6 @@
 import express from 'express';
 
-import {
-    getCustomerByEmail,
-    getCustomerById,
-    getCustomers
-} from '../controllers/customer.js';
+import { getCustomerByEmail, getCustomerById, getCustomers } from '../controllers/customer.js';
 
 import { authenticateToken } from '../controllers/users.js';
 
